@@ -69,11 +69,7 @@ class App extends Component {
     } else if (this.state.todos.length === 0) {
       return <p className="message">Nothing to not do. <em>You can do anything!</em></p>
     }
-    return (
-      <div className="todos">
-        {this.state.todos.map(({ text, key }) => <Todo key={key} onDismiss={() => this.removeTodo(key)}>{text}</Todo>)}
-      </div>
-    );
+    return this.state.todos.map(({ text, key }) => <Todo key={key} onDismiss={() => this.removeTodo(key)}>{text}</Todo>);
   }
 
   render() {
@@ -81,17 +77,14 @@ class App extends Component {
       <div className="App">
         <Container>
           <Row>
-            <Col>
-              <h1>Todont</h1>
-            </Col>
-          </Row>
-          <Row>
             <Col sm="12" md="4">
+              <h1>Todont</h1>
               <p><Input type="text" value={this.state.newTodo} onKeyPress={(e) => this.handleEnter(e)} onChange={(e) => this.updateNewTodoText(e)} placeholder="Thing to not do"/></p>
               <p><Button color="primary" onClick={() => this.addTodo()}>Add Todont</Button></p>
             </Col>
             <Col sm="12" md="8">
-              {this.renderTodos()}
+              <h3>Don't...</h3>
+              <div className="todos">{this.renderTodos()}</div>
             </Col>
           </Row>
         </Container>

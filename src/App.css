@@ -2,8 +2,16 @@
   box-sizing: border-box;
 }
 
+.App {
+  margin-top: 6px;
+}
+
 .message {
   text-align: center;
+}
+
+.todos {
+  margin-top: 22px;
 }
 
 .todo {
