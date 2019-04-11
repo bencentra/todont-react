@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+.message {
+  text-align: center;
+}
+
+.todo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 6px 0;
+  padding: 0 6px;
+}
+.todo:first-child {
+  margin-top: 0;
+}
+.todo:nth-child(even) {
+  background-color: #eee;
+}
+
+.todo-text {
+  flex: 1;
+}
+
+.todo-dismiss {
+  flex: 1;
+}

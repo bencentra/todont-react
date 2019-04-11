@@ -6,6 +6,8 @@ import {
   Input,
   Button,
 } from 'reactstrap';
+import Todo from './Todo';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -28,6 +30,10 @@ class App extends Component {
     }, 500);
   }
 
+  handleEnter(e) {
+    if (e.key === 'Enter') this.addTodo();
+  }
+
   updateNewTodoText(e) {
     this.setState({ newTodo: e.target.value });
   }
@@ -41,16 +47,33 @@ class App extends Component {
     this.setState({
       todos: newTodos,
       newTodo: '',
-    }, () => {
-      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }, () => this._updateLocalStorage());
+  }
+
+  removeTodo(keyToRemove) {
+    const newTodos = this.state.todos.filter(({ key }) => {
+      return key !== keyToRemove;
     });
+    this.setState({
+      todos: newTodos,
+    }, () => this._updateLocalStorage());
+  }
+
+  _updateLocalStorage() {
+    localStorage.setItem('todos', JSON.stringify(this.state.todos));
   }
 
   renderTodos() {
     if (this.state.loading) {
-      return <p>Loading...</p>;
-    } 
-    return <ul>{this.state.todos.map(({ text, key }) => <li key={key}>{text}</li>)}</ul>;
+      return <p className="message">Loading...</p>;
+    } else if (this.state.todos.length === 0) {
+      return <p className="message">Nothing to not do. <em>You can do anything!</em></p>
+    }
+    return (
+      <div className="todos">
+        {this.state.todos.map(({ text, key }) => <Todo key={key} onDismiss={() => this.removeTodo(key)}>{text}</Todo>)}
+      </div>
+    );
   }
 
   render() {
@@ -64,7 +87,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col sm="12" md="4">
-              <p><Input type="text" value={this.state.newTodo} onChange={(e) => this.updateNewTodoText(e)} placeholder="Thing to not do"/></p>
+              <p><Input type="text" value={this.state.newTodo} onKeyPress={(e) => this.handleEnter(e)} onChange={(e) => this.updateNewTodoText(e)} placeholder="Thing to not do"/></p>
               <p><Button color="primary" onClick={() => this.addTodo()}>Add Todont</Button></p>
             </Col>
             <Col sm="12" md="8">
