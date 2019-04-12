@@ -37,3 +37,7 @@
 .todo-dismiss {
   flex: 1;
 }
+
+.completed {
+  text-decoration: line-through;
+}
